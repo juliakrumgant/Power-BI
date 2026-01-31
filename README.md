@@ -89,6 +89,16 @@ The interactive dashboard presents four key visualizations:
 - **Avg. Flights Delayed per Month**: 59.09K flights
 - **% of Flights Delayed**: 18.59% 
 - **Avg. Delay per Delayed Flight**: 58.73 minutes
+- 
+### Weather-Related Delays Metrics
+
+The dashboard also provides a focused view on weather-related delays specifically, which helps travelers understand the impact of weather conditions:
+
+- **Avg. Flights Delayed per Month (Weather-Related)**: 1.80K flights
+- **% of Flights Delayed (Weather-Related)**: 0.57%
+- **Avg. Delay per Delayed Flight (Weather-Related)**: 86.15 minutes
+
+*Note: While weather causes only a small percentage of delays (0.57%), the average delay duration for weather-affected flights (86.15 minutes) is significantly higher than the overall average (58.73 minutes), indicating that weather delays tend to be more severe when they occur.*
 
 ### How Travelers Can Use This Dashboard
 
