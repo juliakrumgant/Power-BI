@@ -134,9 +134,3 @@ This dashboard is designed to help travelers make informed decisions when planni
 - Weather severity is inferred from delay patterns, not direct meteorological data
 - Regional patterns may vary significantly based on seasonal weather patterns
 
-## Future Enhancements
-
-- Integration of real-time weather data with flight delay predictions
-- Machine learning models to predict flight delays based on weather forecasts
-- Comparison analysis with post-2020 data to assess changes in airport reliability
-- Expansion to international flight patterns
