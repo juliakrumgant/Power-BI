@@ -65,10 +65,13 @@ Enhances the efficiency metrics with additional geographic information (city, st
 ### ODBC Connection
 An ODBC (Open Database Connectivity) connection was established to enable seamless data transfer between the SQLite database and Microsoft Power BI. This connection allows for real-time data refresh and interactive dashboard querying without duplicating the source data.
 
+### Database Schema Diagram
+
+![SQLite Database Tables Schema](Tables%20SQL.jpg)
+
 ## Dashboard Visualization
 
-![Flight Delays Dashboard](https://user-images.githubusercontent.com/YOUR_GITHUB_USERNAME/Power-BI/raw/main/dashboard_screenshot.png)
-
+![Flight Delays Dashboard](Dashboard%20Image%20Flights%20US.jpg)
 ### Dashboard Overview
 
 The interactive dashboard presents four key visualizations:
