@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="New flights.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="11928"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="flights_data" custom_title="0" dock_id="1" table="4,12:mainflights_data"/><dock_state state="000000ff00000000fd0000000100000002000002480000024ffc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000000002480000011800ffffff000002480000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="flights" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="39"/><column index="2" value="54"/><column index="3" value="78"/><column index="4" value="226"/><column index="5" value="62"/><column index="6" value="300"/><column index="7" value="93"/><column index="8" value="78"/><column index="9" value="85"/><column index="10" value="93"/><column index="11" value="75"/><column index="12" value="93"/><column index="13" value="132"/><column index="14" value="109"/><column index="15" value="101"/><column index="16" value="87"/><column index="17" value="117"/><column index="18" value="109"/><column index="19" value="105"/><column index="20" value="117"/><column index="21" value="156"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">CREATE VIEW airport_parsed AS
+SELECT
+  airport,
+  airport_name,
+
+  -- City (before the comma)
+  TRIM(substr(airport_name, 1, instr(airport_name, ',') - 1)) AS City,
+
+  -- State (between comma and colon)
+  TRIM(
+    substr(
+      airport_name,
+      instr(airport_name, ',') + 1,
+      instr(airport_name, ':') - instr(airport_name, ',') - 1
+    )
+  ) AS State,
+
+  -- Airport full name (after colon)
+  TRIM(substr(airport_name, instr(airport_name, ':') + 1)) AS AirportFullName,
+
+  'United States' AS Country,
+
+  -- metrics (keep what you need)
+  arr_flights,
+  arr_delay,
+  arr_del15,
+  carrier_delay,
+  weather_delay,
+  nas_delay,
+  security_delay,
+  late_aircraft_delay
+
+FROM flights_data;
+
+SELECT * FROM airport_parsed LIMIT 5;
+
+DROP VIEW IF EXISTS airport_efficiency_metrics;
+CREATE VIEW airport_efficiency_metrics AS
+SELECT
+  airport,
+  airport_name,
+
+  /* =========================
+     Volume
+     ========================= */
+  SUM(arr_flights) AS total_arr_flights,
+
+  /* =========================
+     Reliability rates
+     ========================= */
+  ROUND(1.0 * SUM(arr_del15) / NULLIF(SUM(arr_flights), 0), 4) AS pct_delayed_15plus,
+  ROUND(1.0 * SUM(arr_cancelled) / NULLIF(SUM(arr_flights), 0), 4) AS pct_cancelled,
+  ROUND(1.0 * SUM(arr_diverted) / NULLIF(SUM(arr_flights), 0), 4) AS pct_diverted,
+
+  /* =========================
+     Delay severity (minutes)
+     ========================= */
+  ROUND(1.0 * SUM(arr_delay) / NULLIF(SUM(arr_flights), 0), 2) AS avg_delay_min_per_flight,
+  ROUND(1.0 * SUM(arr_delay) / NULLIF(SUM(arr_del15), 0), 2) AS avg_delay_min_per_delayed_flight,
+
+  /* =========================
+     Root-cause mix
+     ========================= */
+  ROUND(1.0 * SUM(carrier_delay) / NULLIF(SUM(arr_delay), 0), 4) AS share_delay_carrier,
+  ROUND(1.0 * SUM(weather_delay) / NULLIF(SUM(arr_delay), 0), 4) AS share_delay_weather,
+  ROUND(1.0 * SUM(nas_delay) / NULLIF(SUM(arr_delay), 0), 4) AS share_delay_nas,
+  ROUND(1.0 * SUM(security_delay) / NULLIF(SUM(arr_delay), 0), 4) AS share_delay_security,
+  ROUND(1.0 * SUM(late_aircraft_delay) / NULLIF(SUM(arr_delay), 0), 4) AS share_delay_late_aircraft,
+
+  /* =========================
+     Frequency of issues (per flight)
+     ========================= */
+  ROUND(1.0 * SUM(carrier_ct) / NULLIF(SUM(arr_flights), 0), 4) AS carrier_issue_rate,
+  ROUND(1.0 * SUM(weather_ct) / NULLIF(SUM(arr_flights), 0), 4) AS weather_issue_rate,
+  ROUND(1.0 * SUM(nas_ct) / NULLIF(SUM(arr_flights), 0), 4) AS nas_issue_rate,
+  ROUND(1.0 * SUM(security_ct) / NULLIF(SUM(arr_flights), 0), 4) AS security_issue_rate,
+  ROUND(1.0 * SUM(late_aircraft_ct) / NULLIF(SUM(arr_flights), 0), 4) AS late_aircraft_issue_rate
+
+FROM flights_data
+GROUP BY
+  airport,
+  airport_name;
+
+  SELECT * FROM airport_efficiency_metrics LIMIT 5;</sql><current_tab id="0"/></tab_sql></sqlb_project>
