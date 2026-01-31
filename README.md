@@ -73,8 +73,10 @@ An ODBC (Open Database Connectivity) connection was established to enable seamle
 
 ![Flight Delays Dashboard](Dashboard%20Image%20Flights%20US.jpg)
 
-![Weather-Related Delays Dashboard View](Dashboard%20Image%20Weather-Related%20Delays.jpg)
+![Weather-Related Delays Dashboard View](Dashboard%20Image%20Weather-Related.jpg)
+
 ### Dashboard Overview
+
 
 The interactive dashboard presents four key visualizations:
 
