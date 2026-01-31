@@ -100,6 +100,10 @@ The dashboard also provides a focused view on weather-related delays specificall
 
 *Note: While weather causes only a small percentage of delays (0.57%), the average delay duration for weather-affected flights (86.15 minutes) is significantly higher than the overall average (58.73 minutes), indicating that weather delays tend to be more severe when they occur.*
 
+![Weather-Related Delays Dashboard View](Dashboard%20Image%20Weather-Related%20Delays.jpg)
+
+*The dashboard allows filtering by specific delay causes, with the Weather-Related Delays view highlighting airports and time periods most affected by weather conditions.*
+
 ### How Travelers Can Use This Dashboard
 
 This dashboard is designed to help travelers make informed decisions when planning flights:
